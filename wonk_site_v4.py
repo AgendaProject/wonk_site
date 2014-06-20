@@ -31,7 +31,7 @@ rss_feed_list = (
 @app.route('/')
 def index():
 
-            html_string = " "
+    html_string = " "
 
     for rss_url in rss_feed_list:
         d = feedparser.parse(rss_url)
@@ -56,7 +56,6 @@ def index():
 
             html_string += "</td>"
             html_string += "</tr>"
-
 
     return render_template("news_stories.html",html_stuff=html_string)
 
