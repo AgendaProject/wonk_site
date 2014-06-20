@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Top Wonks{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Contact Information for {{wonk_name}} goes here</h1>
+    {% for entry in blog_list %}
+     <li><a href="{{entry.links[0].href}}" > {{entry.title}} </a> <br> {{entry.summary_detail.value}} </li>
+    {% endfor %}
+</div>
+{% endblock %}
