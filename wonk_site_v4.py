@@ -31,6 +31,8 @@ rss_feed_list = (
 @app.route('/')
 def index():
 
+            html_string = " "
+
     for rss_url in rss_feed_list:
         d = feedparser.parse(rss_url)
         for e in d.entries:
