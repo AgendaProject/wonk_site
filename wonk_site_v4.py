@@ -12,6 +12,9 @@ import re
 import sqlite3
 import twitter
 
+print "Hello from Top Wonks."
+
+
 app = Flask("Top Wonks")
 app.config['SECRET_KEY'] = 'hard to guess string 123'
 moment = Moment(app)
@@ -31,6 +34,7 @@ rss_feed_list = (
 @app.route('/')
 def index():
 
+    html_string = " "
     for rss_url in rss_feed_list:
         d = feedparser.parse(rss_url)
         for e in d.entries:
