@@ -1,6 +1,7 @@
+drop table if exists wonks;
 create table wonks
 (
-	wonk_id integer primary key asc,
+	wonk_id integer,
 	name text,
 	email text,
 	phone text,
@@ -9,12 +10,25 @@ create table wonks
 	twitter_name text,
 	blog_url text
 );
+drop table if exists wonk_topics;
 create table wonk_topics
 (
 	wonk_id integer,
 	topic text,
-	reject_flag integer default (0)
+	reject_flag integer
 );
+
+drop table if exists wonk_news_items;
+create table wonk_news_items
+(
+	wonk_id integer,
+	title text,
+	news_date date,
+	news_type text,
+	news_teaser text,
+	news_url text
+);
+	
 
 -- test data
 
