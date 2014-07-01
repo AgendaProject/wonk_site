@@ -12,7 +12,9 @@ import re
 import sqlite3
 import twitter
 
-print "Hello from Top Wonks."
+import MySQLdb
+
+print "Hello from Top Wonks!!"
 
 
 app = Flask("Top Wonks")
@@ -21,9 +23,13 @@ moment = Moment(app)
 
 bootstrap = Bootstrap(app)
 
-dbconn = sqlite3.connect("wonk.db")
+dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
+
 c = dbconn.cursor()
-topic_list = list(c.execute("select w.wonk_id, w.name, t.topic from wonk_topics t, wonks w where w.wonk_id = t.wonk_id order by w.wonk_id"))
+
+c.execute("select w.wonk_id, w.name, t.topic from wonk_topics t, wonks w where w.wonk_id = t.wonk_id order by w.wonk_id")
+
+topic_list = c.fetchall()
 
 rss_feed_list = (
     'http://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',
@@ -31,10 +37,28 @@ rss_feed_list = (
     'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
     )
 
+special_topic_list = ("Tax Policy", "Inequality", "Minimum Wage")
+
 @app.route('/')
 def index():
 
     html_string = " "
+
+    for special_topic in special_topic_list:
+        html_string += "<tr> <td>"
+        html_string += special_topic
+        html_string += "</td> <td>"
+
+        wonk_entered = -1
+        for topic_entry in topic_list:
+            if (topic_entry[0] != wonk_entered): # don't enter the same wonk again
+                if (re.search(topic_entry[2], special_topic, re.IGNORECASE)):
+                    wonk_entered = topic_entry[0]
+                    html_string += make_wonk_link(topic_entry[1],wonk_entered)
+
+        html_string += "</td>"
+        html_string += "</tr>"
+
     for rss_url in rss_feed_list:
         d = feedparser.parse(rss_url)
         for e in d.entries:
@@ -60,16 +84,24 @@ def index():
             html_string += "</tr>"
 
 
+
+
+
+
     return render_template("news_stories.html",html_stuff=html_string)
 
 @app.route('/wonk/<wonk_number>')
 def wonk_page(wonk_number):
     wonk_name = wonk_number
-    dbconn = sqlite3.connect("wonk.db")
+
+    dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
     c = dbconn.cursor()
-    arguments = (wonk_number,)
-    for row in c.execute("select name,blog_url from wonks where wonk_id = ?",arguments):
-        (wonk_name, blog_url) = row
+
+    arguments = (wonk_number)
+    c.execute("select name,blog_url, bio from wonks where wonk_id = %s",arguments)
+    row_list = c.fetchall()
+    for row in row_list:
+        (wonk_name, blog_url, wonk_bio_info) = row
 
     blog_list = ()
     if (blog_url):
@@ -77,7 +109,7 @@ def wonk_page(wonk_number):
         if (d):
             blog_list = d.entries
 
-    return render_template("wonk_info.html", wonk_name=wonk_name, blog_list=blog_list)
+    return render_template("wonk_info.html", wonk_name=wonk_name, wonk_bio_info=wonk_bio_info, blog_list=blog_list)
 
 def make_wonk_link(name,number):
     wonk_url = '/wonk/%s' % number
@@ -93,8 +125,6 @@ def wonk_admin():
     if form.validate_on_submit():
         return redirect(url_for('wonk_admin'))
     return render_template('wonk_admin_form.html',form=form)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
