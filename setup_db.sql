@@ -59,6 +59,7 @@ insert into wonk_topics (wonk_id, topic) values (1011,"tax");
 insert into wonk_topics (wonk_id, topic) values (1012,"tax");
 
 insert into wonk_topics (wonk_id, topic) values (1003,"Alaska");
+insert into wonk_topics (wonk_id, topic) values (1003,"Mississippi");
 
 update wonks set twitter_name = "@agendaproject" where wonk_id = 1001;
 update wonks set twitter_name = "@morrispearl" where wonk_id = 1005;
@@ -66,5 +67,9 @@ update wonks set twitter_name = "@morrispearl" where wonk_id = 1005;
 update wonks set blog_url = "http://www.huffingtonpost.com/author/index.php?author=dean-baker" where wonk_id = 1011;
 update wonks set blog_url = "http://www.huffingtonpost.com/author/index.php?author=jamie-rappaport-clark" where wonk_id = 1012;
 update wonks set blog_url = "http://prospect.org/authors/125995/rss.xml" where wonk_id = 1013;
+
+update wonks set bio = "Ms. Payne is a graduate of Duke, and earned here MBA and Wharton" where wonk_id = 1001;
+update wonks set bio = "Ms. DeSimone was graduated from New York University in 2014" where wonk_id = 1003;
+
 
 

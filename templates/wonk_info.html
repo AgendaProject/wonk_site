@@ -6,6 +6,7 @@
 {% block page_content %}
 <div class="page-header">
     <h1>Contact Information for {{wonk_name}} goes here</h1>
+    <h2> {{wonk_bio_info}} <h2>
     {% for entry in blog_list %}
      <li><a href="{{entry.links[0].href}}" > {{entry.title}} </a> <br> {{entry.summary_detail.value}} </li>
     {% endfor %}
