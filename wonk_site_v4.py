@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, redirect, url_for
 
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextField
 from wtforms.validators import Required
 
 from flask.ext.moment import Moment
@@ -15,7 +15,6 @@ import twitter
 import MySQLdb
 
 print "Hello from Top Wonks!!"
-
 
 app = Flask("Top Wonks")
 app.config['SECRET_KEY'] = 'hard to guess string 123'
@@ -83,12 +82,25 @@ def index():
             html_string += "</td>"
             html_string += "</tr>"
 
-
-
-
-
-
     return render_template("news_stories.html",html_stuff=html_string)
+
+@app.route('/wonkedit/<wonk_number>',methods=['GET','POST'])
+def edit_wonk(wonk_number):
+    f = EditWonk()
+    dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
+    c = dbconn.cursor()
+
+    if f.validate_on_submit():
+        print "New BIO >>> ",f.bio.data
+        c.execute("update wonks set bio = %s where wonk_id = %s", (f.bio.data,wonk_number))
+        
+    arguments = (wonk_number)
+    c.execute("select name,blog_url, bio from wonks where wonk_id = %s",arguments)
+    row_list = c.fetchall()
+
+    for row in row_list:
+        (f.name.data, f.blog_url.data, f.bio.data) = row
+        return render_template("edit_wonk.html",form=f)
 
 @app.route('/wonk/<wonk_number>')
 def wonk_page(wonk_number):
@@ -119,11 +131,26 @@ class FindWonk(Form):
     name = StringField("Wonk name:",validators=[Required()])
     submit = SubmitField('Find the wonk.')
 
+class EditWonk(Form):
+    name = TextField("Wonk name:",validators=[Required()])
+    blog_url = TextField("Blog URL:")
+    bio = TextField("Biography:")
+    submit = SubmitField('Save Changes')
+
+
 @app.route('/wonkadmin',methods=['GET','POST'])
 def wonk_admin():
     form = FindWonk()
+    h_string = " "
     if form.validate_on_submit():
-        return redirect(url_for('wonk_admin'))
+        dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
+        c = dbconn.cursor()
+        arguments = (form.name.data)
+        c.execute("select wonk_id,name from wonks where name REGEXP %s",arguments)
+        row_list = c.fetchall()
+        for row in row_list:
+            h_string += '<a href=/wonkedit/%s>%s</a><br>' % row
+        return render_template('wonk_admin_list.html',html_stuff=h_string)
     return render_template('wonk_admin_form.html',form=form)
 
 if __name__ == '__main__':
