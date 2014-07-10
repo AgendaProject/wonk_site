@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, redirect, url_for
 
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, TextField
+from wtforms import StringField, SubmitField, TextField,TextAreaField
 from wtforms.validators import Required
 
 from flask.ext.moment import Moment
@@ -84,15 +84,24 @@ def index():
 
     return render_template("news_stories.html",html_stuff=html_string)
 
+class EditWonk(Form):
+    name = TextField("Wonk name:",validators=[Required()])
+    blog_url = TextField("Blog URL:")
+    bio = TextAreaField("Biography:")
+    submit = SubmitField('Save Changes')
+
 @app.route('/wonkedit/<wonk_number>',methods=['GET','POST'])
 def edit_wonk(wonk_number):
     f = EditWonk()
     dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
-    c = dbconn.cursor()
+    with dbconn:
+        c = dbconn.cursor()
 
-    if f.validate_on_submit():
-        print "New BIO >>> ",f.bio.data
-        c.execute("update wonks set bio = %s where wonk_id = %s", (f.bio.data,wonk_number))
+        if f.validate_on_submit():
+            print "Name >>> ",f.name.data
+            print "New BIO >>> ",f.bio.data
+            print "New Blog URL >>> ",f.blog_url.data
+            c.execute('update wonks set bio = %s where wonk_id = %s', (f.bio.data,wonk_number))
         
     arguments = (wonk_number)
     c.execute("select name,blog_url, bio from wonks where wonk_id = %s",arguments)
@@ -130,13 +139,6 @@ def make_wonk_link(name,number):
 class FindWonk(Form):
     name = StringField("Wonk name:",validators=[Required()])
     submit = SubmitField('Find the wonk.')
-
-class EditWonk(Form):
-    name = TextField("Wonk name:",validators=[Required()])
-    blog_url = TextField("Blog URL:")
-    bio = TextField("Biography:")
-    submit = SubmitField('Save Changes')
-
 
 @app.route('/wonkadmin',methods=['GET','POST'])
 def wonk_admin():
