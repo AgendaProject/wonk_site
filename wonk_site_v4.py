@@ -1,3 +1,4 @@
+from time import strptime
 from flask import Flask, render_template, session, redirect, url_for
 
 from flask.ext.bootstrap import Bootstrap
@@ -14,75 +15,35 @@ import twitter
 
 import MySQLdb
 
-print "Hello from Top Wonks!!"
+print "Hello from Democracy Top Wonks!!"
 
 app = Flask("Top Wonks")
-app.config['SECRET_KEY'] = 'hard to guess string 123'
+app.config['SECRET_KEY'] = '2264636714'
 moment = Moment(app)
 
 bootstrap = Bootstrap(app)
 
-dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
-
-c = dbconn.cursor()
-
-c.execute("select w.wonk_id, w.name, t.topic from wonk_topics t, wonks w where w.wonk_id = t.wonk_id order by w.wonk_id")
-
-topic_list = c.fetchall()
-
-rss_feed_list = (
-    'http://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',
-    'http://rss.nytimes.com/services/xml/rss/nyt/Economy.xml',
-    'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
-    )
-
-special_topic_list = ("Tax Policy", "Inequality", "Minimum Wage")
+date_format = "%Y-%m-%dT%H:%M:%S"
 
 @app.route('/')
 def index():
-
-    html_string = " "
-
-    for special_topic in special_topic_list:
-        html_string += "<tr> <td>"
-        html_string += special_topic
-        html_string += "</td> <td>"
-
-        wonk_entered = -1
-        for topic_entry in topic_list:
-            if (topic_entry[0] != wonk_entered): # don't enter the same wonk again
-                if (re.search(topic_entry[2], special_topic, re.IGNORECASE)):
-                    wonk_entered = topic_entry[0]
-                    html_string += make_wonk_link(topic_entry[1],wonk_entered)
-
-        html_string += "</td>"
-        html_string += "</tr>"
-
-    for rss_url in rss_feed_list:
-        d = feedparser.parse(rss_url)
-        for e in d.entries:
-            html_string += "<tr>"
-            m = re.match("[^<>]+",e.summary_detail.value)
-            v = m.group(0)
-            html_string += '<td><a href="%s">%s</a><br>%s (%s)</td>' % (
-                e.links[0].href, e.title, v, e.updated
-                )
-            html_string += "<td>"
-
-            wonk_entered = -1
-            for topic_entry in topic_list:
-                if (topic_entry[0] != wonk_entered): # don't enter the same wonk again
-                    if (re.search(topic_entry[2], e.title,re.IGNORECASE)):
-                        wonk_entered = topic_entry[0]
-                        html_string += make_wonk_link(topic_entry[1],wonk_entered)
-                    elif (re.search(topic_entry[2], v,re.IGNORECASE)):
-                        wonk_entered = topic_entry[0]
-                        html_string += make_wonk_link(topic_entry[1],wonk_entered)
-
-            html_string += "</td>"
-            html_string += "</tr>"
-
-    return render_template("news_stories.html",html_stuff=html_string)
+    dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
+    c = dbconn.cursor()
+    c.execute("select wonk_id, name, web_url, blog_url from wonks order by wonk_id")
+    wonk_list = c.fetchall()
+    blog_entry_list = []
+    for row in wonk_list:
+        (wonk_id, wonk_name, wonk_url, blog_url) = row
+        if (blog_url):
+            d = feedparser.parse(blog_url)
+            if (d):
+                for entry in d.entries:
+                    e = (strptime(entry.updated[:-7],date_format),wonk_id, wonk_name, wonk_url, entry)
+                    # The last seven characters seem to be the timezone, but in the wrong format, so ignore.
+                    blog_entry_list.append(e)
+    blog_entry_list.sort(key=lambda x:x[0], reverse=True)
+    # we want to stort on the first column, the timestamp, and have the latest entries first.
+    return render_template("wonk_blog_entry_list.html", blog_list=blog_entry_list)
 
 class EditWonk(Form):
     name = TextField("Wonk name:",validators=[Required()])
