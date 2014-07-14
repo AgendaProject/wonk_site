@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Top Democracy Wonks{% endblock %}
+
+{% block page_content %}
+    <h1>News from the Wonks!!!</h1>
+    {% for wonk in blog_list %}
+      {% set update_time, wonk_id, wonk_name, wonk_url, entry = wonk %}
+        <li><a href="{{entry.links[0].href}}" > {{entry.title}} </a> {{entry.updated}}
+	 <br> {{entry.summary_detail.value}}
+	 <br> <a href={{wonk_url}}> {{wonk_name}} </a>
+	 </li>
+         <br>
+    {% endfor %}
+
+{% endblock %}
