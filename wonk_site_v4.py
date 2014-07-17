@@ -1,4 +1,3 @@
-from time import strptime
 from flask import Flask, render_template, session, redirect, url_for
 
 from flask.ext.bootstrap import Bootstrap
@@ -15,6 +14,8 @@ import twitter
 
 import MySQLdb
 
+from dateutil.parser import parse
+
 print "Hello from Democracy Top Wonks!!"
 
 app = Flask("Top Wonks")
@@ -23,13 +24,11 @@ moment = Moment(app)
 
 bootstrap = Bootstrap(app)
 
-date_format = "%Y-%m-%dT%H:%M:%S"
-
 @app.route('/')
 def index():
     dbconn = MySQLdb.connect("mysql.server","mpearl","readyforgranny","mpearl$wonk_db")
     c = dbconn.cursor()
-    c.execute("select wonk_id, name, web_url, blog_url from wonks order by wonk_id")
+    c.execute("select wonk_id, name, bio_url, blog_url from wonks where blog_url is not null order by wonk_id")
     wonk_list = c.fetchall()
     blog_entry_list = []
     for row in wonk_list:
@@ -38,11 +37,14 @@ def index():
             d = feedparser.parse(blog_url)
             if (d):
                 for entry in d.entries:
-                    e = (strptime(entry.updated[:-7],date_format),wonk_id, wonk_name, wonk_url, entry)
-                    # The last seven characters seem to be the timezone, but in the wrong format, so ignore.
+                    try:
+                        dd = parse(entry.updated,ignoretz=True,fuzzy=True)
+                    except:
+                        dd = parse("1/1/2008",ignoretz=True,fuzzy=True)
+                    e = (dd, dd.strftime("%A %d %B %Y %I:%M %p"),wonk_id, wonk_name, wonk_url, entry)
                     blog_entry_list.append(e)
     blog_entry_list.sort(key=lambda x:x[0], reverse=True)
-    # we want to stort on the first column, the timestamp, and have the latest entries first.
+    # we want to sort on the first column, the timestamp, and have the latest entries first.
     return render_template("wonk_blog_entry_list.html", blog_list=blog_entry_list)
 
 class EditWonk(Form):

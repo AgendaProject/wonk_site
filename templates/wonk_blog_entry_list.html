@@ -6,12 +6,13 @@
 {% block page_content %}
     <h1>News from the Wonks!!!</h1>
     {% for wonk in blog_list %}
-      {% set update_time, wonk_id, wonk_name, wonk_url, entry = wonk %}
-        <li><a href="{{entry.links[0].href}}" > {{entry.title}} </a> {{entry.updated}}
-	 <br> {{entry.summary_detail.value}}
-	 <br> <a href={{wonk_url}}> {{wonk_name}} </a>
+      {% set update_time, display_update_time, wonk_id, wonk_name, wonk_url, entry = wonk %}
+      {% if entry.links is defined %}
+        <li> <a href={{wonk_url}}> {{wonk_name}} </a> <br>
+	     <a href="{{entry.links[0].href}}" > {{entry.title}} </a> {{display_update_time}} <br>
+	 {{entry.summary_detail.value | safe}}
 	 </li>
          <br>
+      {% endif %}
     {% endfor %}
-
 {% endblock %}

@@ -3,12 +3,14 @@ create table wonks
 (
 	wonk_id integer,
 	name text,
-	email text,
-	phone text,
-	bio text,
+	bio_url text,
+	blog_url text,
 	web_url text,
-	twitter_name text,
-	blog_url text
+	twitter_url text,
+	twitter_id integer,
+	also_found_in text,
+	email text,
+	phone text
 );
 drop table if exists wonk_topics;
 create table wonk_topics
@@ -29,47 +31,103 @@ create table wonk_news_items
 	news_url text
 );
 	
-
--- test data
-
-insert into wonks (wonk_id, name) values (1001,"Erica");
-insert into wonks (wonk_id, name) values (1002,"Hanna");
-insert into wonks (wonk_id, name) values (1003,"Cathryn");
-insert into wonks (wonk_id, name) values (1004,"Mary");
-insert into wonks (wonk_id, name) values (1005,"Morris");
-
-insert into wonks (wonk_id, name) values (1011, "Dean Baker");
-insert into wonks (wonk_id, name) values (1012, "Jamie Rappaport Clark");
-insert into wonks (wonk_id, name) values (101, "Robert Kuttner");
-
-
-
-insert into wonk_topics (wonk_id, topic) values (1001,"min.*wage");
-insert into wonk_topics (wonk_id, topic) values (1001,"Wonk");
-insert into wonk_topics (wonk_id, topic) values (1002,"min.*wage");
-insert into wonk_topics (wonk_id, topic) values (1003,"min.*wage");
-insert into wonk_topics (wonk_id, topic) values (1004,"min.*wage");
-insert into wonk_topics (wonk_id, topic) values (1005,"min.*wage");
-insert into wonk_topics (wonk_id, topic) values (1005,"Wonk");
-insert into wonk_topics (wonk_id, topic) values (1001,"tax");
-insert into wonk_topics (wonk_id, topic) values (1002,"tax");
-insert into wonk_topics (wonk_id, topic) values (1003,"tax");
-
-insert into wonk_topics (wonk_id, topic) values (1011,"tax");
-insert into wonk_topics (wonk_id, topic) values (1012,"tax");
-
-insert into wonk_topics (wonk_id, topic) values (1003,"Alaska");
-insert into wonk_topics (wonk_id, topic) values (1003,"Mississippi");
-
-update wonks set twitter_name = "@agendaproject" where wonk_id = 1001;
-update wonks set twitter_name = "@morrispearl" where wonk_id = 1005;
-
-update wonks set blog_url = "http://www.huffingtonpost.com/author/index.php?author=dean-baker" where wonk_id = 1011;
-update wonks set blog_url = "http://www.huffingtonpost.com/author/index.php?author=jamie-rappaport-clark" where wonk_id = 1012;
-update wonks set blog_url = "http://prospect.org/authors/125995/rss.xml" where wonk_id = 1013;
-
-update wonks set bio = "Ms. Payne is a graduate of Duke, and earned here MBA and Wharton" where wonk_id = 1001;
-update wonks set bio = "Ms. DeSimone was graduated from New York University in 2014" where wonk_id = 1003;
-
-
-
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1001,"Abby Levine","http://www.topwonks.org/experts/abby-levine/","x","https://twitter.com/Alevineafj",245478588,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1002,"Adam Skaggs","http://www.topwonks.org/experts/j-adam-skaggs/","http://www.huffingtonpost.com/author/index.php?author=adam-skaggs","https://twitter.com/jadamskaggs",484086552,"Brennan Center for Justice Blog, The New Republic, The Atlantic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1003,"Andrew Blotky","http://www.topwonks.org/experts/andrew-blotky/","http://www.huffingtonpost.com/author/index.php?author=andrew-blotky","https://twitter.com/AndrewBlotky",919435544,"Politico, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1004,"Andrew Gelman","http://www.topwonks.org/experts/andrew-gelman/","http://andrewgelman.com/feed","https://twitter.com/StatModeling",214653213,"Slate, Washington Post, NY Times, The New Republic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1004,"Andrew Gelman","http://www.topwonks.org/experts/andrew-gelman/","http://www.huffingtonpost.com/author/index.php?author=andrew-gelman","https://twitter.com/StatModeling",214653213,"Slate, Washington Post, NY Times, The New Republic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1005,"Aziz Huq","http://www.topwonks.org/experts/aziz-huq/","http://www.alternet.org/authors/aziz-huq/feed","x",-1,"Slate, The Nation, Brennan Center for Justice Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1005,"Aziz Huq","http://www.topwonks.org/experts/aziz-huq/","http://www.huffingtonpost.com/author/index.php?author=aziz-huq","x",-1,"Slate, The Nation, Brennan Center for Justice Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1005,"Aziz Huq","http://www.topwonks.org/experts/aziz-huq/","http://prospect.org/authors/127175/rss.xml","x",-1,"Slate, The Nation, Brennan Center for Justice Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1006,"Barbara Arnwine","http://www.topwonks.org/experts/barbara-arnwine/","x","https://twitter.com/barbs73",42101913,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1007,"Barry Fadem","http://www.topwonks.org/experts/barry-fadem/","x","x",-1,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1008,"Benjamin Jealous","http://www.topwonks.org/experts/benjamin-todd-jealous/","http://www.huffingtonpost.com/author/index.php?author=benjamin-todd-jealous","https://twitter.com/BenJealous",43638469,"The Nation, U.S. News");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1009,"Brenda Wright","http://www.topwonks.org/experts/brenda-wright/","http://www.demos.org/expert-publications/802/rss.xml","https://twitter.com/brendawright06",887490788,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1010,"Caroline Fredrickson","http://www.topwonks.org/experts/caroline-fredrickson/","http://www.huffingtonpost.com/author/index.php?author=caroline-fredrickson","https://twitter.com/crfredrickson",123685638,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1011,"Celinda Lake","http://www.topwonks.org/experts/celinda-lake/","http://www.huffingtonpost.com/author/index.php?author=celinda-lake","https://twitter.com/celindalake",240921277,"Politico (Opinion)");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1012,"Christopher Edley Jr.","http://www.topwonks.org/experts/christopher-edley-jr/","x","x",-1,"Berkeley Law Blog, C-SPAN, The Nation");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1013,"Ciara Torres Spelliscy","http://www.topwonks.org/experts/ciara-torres-spelliscy/","http://www.huffingtonpost.com/author/index.php?author=ciara-torresspelliscy","https://twitter.com/ProfCiara",1525867752,"The Hill Blog, Brennan Center for Justice Blog, Guernica Mag, ACS Blog, C-SPAN, NY Times, Slate, The Atlantic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1014,"David Donnelly","http://www.topwonks.org/experts/david-donnelly/","http://www.alternet.org/authors/david-donnelly/feed","https://twitter.com/daviddonnelly",7799732,"The Nation");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1014,"David Donnelly","http://www.topwonks.org/experts/david-donnelly/","http://www.huffingtonpost.com/author/index.php?author=david-donnelly","https://twitter.com/daviddonnelly",7799732,"The Nation");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1015,"David Pozen","http://www.topwonks.org/experts/david-pozen/","http://www.ssrn.com/rss/authors/2003/0905/346717.rss","x",-1,"Brennan Center for Justice Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1016,"Donita Judge","http://www.topwonks.org/experts/donita-judge/","x","https://twitter.com/JudgeDonita",272048106,"MSNBC");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1017,"Doug Kendall","http://www.topwonks.org/experts/doug-kendall/","http://www.huffingtonpost.com/author/index.php?author=doug-kendall","x",-1,"Slate, Grist, C-SPAN, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1018,"Alex Keyssar","http://www.topwonks.org/experts/alexander-keyssar/","http://www.huffingtonpost.com/author/index.php?author=alex-keyssar","x",-1,"NY Times, Washington Post, The Nation, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1019,"Ellen Miller","http://www.topwonks.org/experts/ellen-miller/","http://www.huffingtonpost.com/author/index.php?author=ellen-miller","https://twitter.com/EllnMllr",13834402,"Sunlight Foundation Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1019,"Ellen Miller","http://www.topwonks.org/experts/ellen-miller/","http://prospect.org/authors/126119/rss.xml","https://twitter.com/EllnMllr",13834402,"Sunlight Foundation Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1020,"Eric Marshall","http://www.topwonks.org/experts/eric-marshall-2/","x","https://twitter.com/enmarshall",16423045,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1021,"Erika Wood","http://www.topwonks.org/experts/erika-l-wood/","http://www.huffingtonpost.com/author/index.php?author=erika-wood","x",-1,"NY Times, C-SPAN, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1021,"Erika Wood","http://www.topwonks.org/experts/erika-l-wood/","http://www.alternet.org/authors/erika-wood-0/feed","x",-1,"NY Times, C-SPAN, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1022,"Faiza Patel","http://www.topwonks.org/experts/faiza-patel/","http://www.huffingtonpost.com/author/index.php?author=faiza-patel","https://twitter.com/FaizaPatelBCJ",1137416996,"Brennan Center for Justice Blog, C-SPAN, Aljazeera America, NY Times, The New Republic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1022,"Faiza Patel","http://www.topwonks.org/experts/faiza-patel/","http://www.theguardian.com/profile/faiza-patel/rss","https://twitter.com/FaizaPatelBCJ",1137416996,"Brennan Center for Justice Blog, C-SPAN, Aljazeera America, NY Times, The New Republic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1023,"Fred Wertheimer","http://www.topwonks.org/experts/fred-wertheimer/","http://www.huffingtonpost.com/author/index.php?author=fred-wertheimer","https://twitter.com/FredWertheimer",182637996,"Politico, Brennan Center for Justice Blog, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1024,"Geoffrey Stone","http://www.topwonks.org/experts/geoffrey-stone/","http://www.huffingtonpost.com/author/index.php?author=geoffrey-r-stone","x",-1,"The Daily Beast");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1025,"Guy Uriel Charles","http://www.topwonks.org/experts/guy-uriel-charles-2/","x","https://twitter.com/ProfGuyCharles",360946380,"Politico (Opinion), NY Times, CNN, Salon, C-SPAN, Harvard Law Review");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1026,"Heather Gerken","http://www.topwonks.org/experts/heather-gerken/","http://prospect.org/authors/127607/rss.xml","x",-1,"Election Law Blog, Slate, Politico (Opinion), Harvard Law Review, NY Times, Next New Deal, Washington Post, The Hill Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1027,"Inimai Chettiar","http://www.topwonks.org/experts/inimai-m-chettiar/","http://www.huffingtonpost.com/author/index.php?author=inimai-chettiar","https://twitter.com/Inimai",26254344,"Brennan Center for Justice Blog, The Nation, U.S. News, The Atlantic, ACS Blog, ");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1028,"James Sample","http://www.topwonks.org/experts/james-sample/","http://www.huffingtonpost.com/author/index.php?author=james-sample","x",-1,"Brennan Center for Justice Blog, Politico (Opinion)");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1029,"Jamie Raskin","http://www.topwonks.org/experts/jamie-raskin/","http://www.huffingtonpost.com/author/index.php?author=jamie-raskin","https://twitter.com/jamie_raskin",42108810,"The Nation, Dissent Magazine, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1030,"Jeremy Miller","http://www.topwonks.org/experts/jeremy-miller/","x","x",-1,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1031,"John Bonifaz","http://www.topwonks.org/experts/john-c-bonifaz/","http://www.alternet.org/authors/john-bonifaz/feed","https://twitter.com/JohnBonifaz",618307072,"Truthout, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1031,"John Bonifaz","http://www.topwonks.org/experts/john-c-bonifaz/","http://dailycaller.com/author/jbonifaznelson/feed/","https://twitter.com/JohnBonifaz",618307072,"Truthout, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1032,"John Kowal","http://www.topwonks.org/experts/john-f-kowal/","x","x",-1,"Brennan Center for Justice Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1033,"John Koza","http://www.topwonks.org/experts/john-koza/","x","x",-1,"The MIT Press, The Federalist Society, C-SPAN, U.S. News, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1034,"Josh Silver","http://www.topwonks.org/experts/josh-silver/","http://www.huffingtonpost.com/author/index.php?author=josh-silver","x",-1,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1034,"Josh Silver","http://www.topwonks.org/experts/josh-silver/","http://www.alternet.org/authors/josh-silver/feed","x",-1,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1035,"Joshua Tucker","http://www.topwonks.org/experts/joshua-a-tucker/","http://www.aljazeera.com/Services/Rss/?PostingId=2011111675959148576","https://twitter.com/j_a_tucker",29757971,"Salon");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1035,"Joshua Tucker","http://www.topwonks.org/experts/joshua-a-tucker/","http://prospect.org/authors/189496/rss.xml","https://twitter.com/j_a_tucker",29757971,"Salon");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1036,"Judith Browne Dianis","http://www.topwonks.org/experts/judith-brown-dianis/","http://www.huffingtonpost.com/author/index.php?author=judith-browne-dianis","https://twitter.com/jbrownedianis",11013952,"U.S. News, C-SPAN, Washington Post");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1037,"Justin Levitt","http://www.topwonks.org/experts/justin-levitt/","http://www.huffingtonpost.com/author/index.php?author=justin-levitt","https://twitter.com/_justinlevitt_",52173629,"The Federalist Society, Election Law Blog, Politico, The Nation, ACS Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1038,"Keesha Gaskins","http://www.topwonks.org/experts/keesha-gaskins/","http://www.huffingtonpost.com/author/index.php?author=keesha-gaskins","https://twitter.com/keeshagaskins",15213658,"Brennan Center for Justice Blog, Truthout, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1039,"Laura Quinn","http://www.topwonks.org/experts/laura-quinn/","x","x",-1,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1040,"Lawrence Lessig","http://www.topwonks.org/experts/lawrence-lessig/","http://www.huffingtonpost.com/author/index.php?author=lawrence-lessig","https://twitter.com/lessig",11388132,"The Atlantic, The Daily Beast, The Nation, Politico");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1040,"Lawrence Lessig","http://www.topwonks.org/experts/lawrence-lessig/","http://www.alternet.org/authors/lawrence-lessig-0/feed","https://twitter.com/lessig",11388132,"The Atlantic, The Daily Beast, The Nation, Politico");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1041,"Lawrence Norden","http://www.topwonks.org/experts/lawrence-norden-3/","http://www.huffingtonpost.com/author/index.php?author=lawrence-norden","x",-1,"Brennan Center for Justice Blog, U.S. News, Politico, The Nation, C-SPAN, NY Daily News, The Daily Beast");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1042,"Lisa Danetz","http://www.topwonks.org/experts/lisa-danetz/","http://prospect.org/authors/214796/rss.xml","https://twitter.com/LisaDanetz",1264482584,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1042,"Lisa Danetz","http://www.topwonks.org/experts/lisa-danetz/","http://www.demos.org/expert-publications/804/rss.xml","https://twitter.com/LisaDanetz",1264482584,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1043,"Lisa Graves","http://www.topwonks.org/experts/lisa-graves/","http://www.alternet.org/authors/lisa-graves/feed","https://twitter.com/thelisagraves",121827883,"PR Watch.org, The Nation, Truthout, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1044,"Lorraine Minnite","http://www.topwonks.org/experts/lorraine-c-minnite/","http://www.demos.org/expert-publications/836/rss.xml","x",-1,"The Nation, The New Republic, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1045,"Marissa Brown","http://www.topwonks.org/experts/marissa-brown/","x","x",-1,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1046,"Mark Posner","http://www.topwonks.org/experts/mark-posner/","x","x",-1,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1047,"Melanie Sloan","http://www.topwonks.org/experts/melanie-sloan/","http://www.huffingtonpost.com/author/index.php?author=melanie-sloan","x",-1,"Politico (Opinion), C-SPAN, The Hill Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1048,"Michael Malbin","http://www.topwonks.org/experts/michael-j-malbin/","http://prospect.org/topic/7836/rss.xml","https://twitter.com/MichaelMalbin",322620425,"Brennan Center for Justice Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1049,"Michael Waldman","http://www.topwonks.org/experts/michael-waldman/","x","https://twitter.com/mawaldman",21965684,"Brennan Center for Justice Blog, Politico, The Daily Beast, The New Republic, U.S. News, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1050,"Monica Youn","http://www.topwonks.org/experts/monica-youn/","http://www.huffingtonpost.com/author/index.php?author=monica-youn","x",-1,"Slate, ACS Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1051,"Myrna Perez","http://www.topwonks.org/experts/myrna-perez/","http://www.huffingtonpost.com/author/index.php?author=myrna-perez","x",-1,"Brennan Center for Justice Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1052,"Nan Aron","http://www.topwonks.org/experts/nan-aron/","http://www.huffingtonpost.com/author/index.php?author=nan-aron","https://twitter.com/NanAron",15828665,"The Nation, Politico (Opinion), Washington Post, C-SPAN, ACS Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1053,"Nathaniel Persily","http://www.topwonks.org/experts/nathaniel-persily/","x","https://twitter.com/persily",57711417,"NY Times, Washington Post, Harvard Law Review");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1054,"Nick Nyhart","http://www.topwonks.org/experts/nick-nyhart/","http://www.huffingtonpost.com/author/index.php?author=nick-nyhart","https://twitter.com/nicknyhart",124810459,"The Nation, Politico (Opinion), C-SPAN, Next New Deal");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1054,"Nick Nyhart","http://www.topwonks.org/experts/nick-nyhart/","http://prospect.org/authors/209210/rss.xml","https://twitter.com/nicknyhart",124810459,"The Nation, Politico (Opinion), C-SPAN, Next New Deal");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1055,"Nicole Austin Hillery","http://www.topwonks.org/experts/nicole-austin-hillery/","x","x",-1,"Brennan Center for Justice Blog, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1056,"Nina Perales","http://www.topwonks.org/experts/nina-perales/","x","x",-1,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1057,"Page Gardner","http://www.topwonks.org/experts/page-gardner/","http://www.huffingtonpost.com/author/index.php?author=page-gardner","https://twitter.com/PageGardnerDC",1854859454,"Truthout");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1057,"Page Gardner","http://www.topwonks.org/experts/page-gardner/","http://www.alternet.org/authors/page-gardner/feed","https://twitter.com/PageGardnerDC",1854859454,"Truthout");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1058,"Pam Smith","http://www.topwonks.org/experts/pamela-smith/","x","https://twitter.com/j00nj00n",23215959,"Verified Voting Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1059,"Penda Hair","http://www.topwonks.org/experts/penda-d-hair/","http://www.huffingtonpost.com/author/index.php?author=penda-d-hair","https://twitter.com/PendaHair",22946406,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1060,"Rashad Robinson","http://www.topwonks.org/experts/rashad-robinson/","http://www.huffingtonpost.com/author/index.php?author=rashad-robinson","https://twitter.com/rashadrobinson",21456548,"NY Times, The Hill Blog");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1061,"Richard Briffault","http://www.topwonks.org/experts/richard-briffault/","http://www.ssrn.com/rss/authors/1999/1202/199186.rss","x",-1,"The Atlantic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1061,"Richard Briffault","http://www.topwonks.org/experts/richard-briffault/","http://prospect.org/authors/126897/rss.xml","x",-1,"The Atlantic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1062,"Rob Richie","http://www.topwonks.org/experts/rob-richie/","http://www.huffingtonpost.com/author/index.php?author=rob-richie","https://twitter.com/Rob_Richie",49723020,"The Nation, Reuters, C-SPAN, U.S. News");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1062,"Rob Richie","http://www.topwonks.org/experts/rob-richie/","http://www.alternet.org/authors/rob-richie-0/feed","https://twitter.com/Rob_Richie",49723020,"The Nation, Reuters, C-SPAN, U.S. News");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1062,"Rob Richie","http://www.topwonks.org/experts/rob-richie/","http://www.motherjones.com/rss/authors/12196","https://twitter.com/Rob_Richie",49723020,"The Nation, Reuters, C-SPAN, U.S. News");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1063,"Robert Erikson","http://www.topwonks.org/experts/robert-erikson/","http://www.huffingtonpost.com/author/index.php?author=robert-s-erikson","x",-1,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1064,"Sam Issacharoff","http://www.topwonks.org/experts/samuel-issacharoff/","http://www.ssrn.com/rss/authors/1997/1124/48053.rss","x",-1,"The New Republic, Slate, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1065,"Sean Wilentz","http://www.topwonks.org/experts/sean-wilentz/","http://seanwilentz.com/feed/","https://twitter.com/seanwilentz",172048532,"The New Republic, The New Yorker, NY Times, Politico (Opinion), The Daily Beast, Dissent, Slate, Salon, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1065,"Sean Wilentz","http://www.topwonks.org/experts/sean-wilentz/","http://prospect.org/authors/125957/rss.xml","https://twitter.com/seanwilentz",172048532,"The New Republic, The New Yorker, NY Times, Politico (Opinion), The Daily Beast, Dissent, Slate, Salon, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1066,"Spencer Overton","http://www.topwonks.org/experts/spencer-overton-2/","http://www.ssrn.com/rss/authors/2001/0317/266965.rss","https://twitter.com/SpencerOverton",1301535528,"Election Law Blog, Brennan Center for Justice Blog, Reuters");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1066,"Spencer Overton","http://www.topwonks.org/experts/spencer-overton-2/","http://www.huffingtonpost.com/author/index.php?author=spencer-overton","https://twitter.com/SpencerOverton",1301535528,"Election Law Blog, Brennan Center for Justice Blog, Reuters");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1066,"Spencer Overton","http://www.topwonks.org/experts/spencer-overton-2/","http://prospect.org/authors/218534/rss.xml","https://twitter.com/SpencerOverton",1301535528,"Election Law Blog, Brennan Center for Justice Blog, Reuters");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1067,"Stan Greenberg","http://www.topwonks.org/experts/stan-greenberg/","http://www.theguardian.com/profile/stan-greenberg/rss","https://twitter.com/StanGreenberg",22370581,"NY Times, The New Republic");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1068,"Stephen Ansolabehere","http://www.topwonks.org/experts/stephen-ansolabehere/","http://www.demos.org/taxonomy/term/1134/all/feed","x",-1,"Slate, Harvard Law Review, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1069,"Taeku Lee","http://www.topwonks.org/experts/taeku-lee/","http://blogs.worldbank.org/team/taeku-lee/rss.xml","x",-1,"Foreign Affairs, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1069,"Taeku Lee","http://www.topwonks.org/experts/taeku-lee/","http://prospect.org/authors/127851/rss.xml","x",-1,"Foreign Affairs, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1070,"Tom Saenz","http://www.topwonks.org/experts/tom-saenz/","x","https://twitter.com/Thomas_Saenz",946505479,"x");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1071,"Tova Andrea Wang","http://www.topwonks.org/experts/tova-andrea-wang/","http://www.motherjones.com/rss/authors/11438","https://twitter.com/tovawang",226986426,"The Nation, Politico (Opinion), C-SPAN, Salon");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1071,"Tova Andrea Wang","http://www.topwonks.org/experts/tova-andrea-wang/","http://www.alternet.org/authors/tova-andrea-wang/feed","https://twitter.com/tovawang",226986426,"The Nation, Politico (Opinion), C-SPAN, Salon");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1071,"Tova Andrea Wang","http://www.topwonks.org/experts/tova-andrea-wang/","http://prospect.org/authors/126824/rss.xml","https://twitter.com/tovawang",226986426,"The Nation, Politico (Opinion), C-SPAN, Salon");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1072,"Trevor Potter","http://www.topwonks.org/experts/trevor-potter-2/","http://webfeeds.brookings.edu/brookingsrss/experts/pottert?format=xml","https://twitter.com/thetrevorpotter",554468225,"Politico (Opinion)");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1072,"Trevor Potter","http://www.topwonks.org/experts/trevor-potter-2/","http://www.alternet.org/authors/trevor-potter/feed","https://twitter.com/thetrevorpotter",554468225,"Politico (Opinion)");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1073,"Victoria Bassetti","http://www.topwonks.org/experts/victoria-bassetti/","x","x",-1,"Brennan Center for Justice Blog, Truthout, C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1074,"Wendy Weiser","http://www.topwonks.org/experts/wendy-r-weiser/","http://www.huffingtonpost.com/author/index.php?author=wendy-weiser","x",-1,"Verified Voting Blog, Brennan Center for Justice Blog, The Atlantic, U.S. News, Truthout");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1075,"Zephyr Teachout","http://www.topwonks.org/experts/zephyr-teachout-2/","http://www.alternet.org/authors/zephyr-teachout/feed","https://twitter.com/zephyrteachout",15467700,"C-SPAN");
+insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1075,"Zephyr Teachout","http://www.topwonks.org/experts/zephyr-teachout-2/","http://www.huffingtonpost.com/author/index.php?author=zephyr-teachout","https://twitter.com/zephyrteachout",15467700,"C-SPAN")
