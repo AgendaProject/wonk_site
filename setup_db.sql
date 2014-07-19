@@ -20,21 +20,23 @@ create table wonk_topics
 	reject_flag integer
 );
 
-drop table if exists wonk_news_items;
-create table wonk_news_items
+drop table if exists wonk_news_entries;
+create table wonk_news_entries
 (
 	wonk_id integer,
-	title text,
-	news_date date,
-	news_type text,
-	news_teaser text,
-	news_url text
+	title text character set utf8,
+	blog_href text character set utf8,
+	summary text character set utf8,
+	wonk_name text character set utf8,
+	wonk_url text character set utf8,
+	entry_date timestamp
 );
+
+create index wonk_date_index on wonk_news_entries(entry_date);
 	
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1001,"Abby Levine","http://www.topwonks.org/experts/abby-levine/","x","https://twitter.com/Alevineafj",245478588,"C-SPAN");
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1002,"Adam Skaggs","http://www.topwonks.org/experts/j-adam-skaggs/","http://www.huffingtonpost.com/author/index.php?author=adam-skaggs","https://twitter.com/jadamskaggs",484086552,"Brennan Center for Justice Blog, The New Republic, The Atlantic");
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1003,"Andrew Blotky","http://www.topwonks.org/experts/andrew-blotky/","http://www.huffingtonpost.com/author/index.php?author=andrew-blotky","https://twitter.com/AndrewBlotky",919435544,"Politico, C-SPAN");
-insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1004,"Andrew Gelman","http://www.topwonks.org/experts/andrew-gelman/","http://andrewgelman.com/feed","https://twitter.com/StatModeling",214653213,"Slate, Washington Post, NY Times, The New Republic");
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1004,"Andrew Gelman","http://www.topwonks.org/experts/andrew-gelman/","http://www.huffingtonpost.com/author/index.php?author=andrew-gelman","https://twitter.com/StatModeling",214653213,"Slate, Washington Post, NY Times, The New Republic");
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1005,"Aziz Huq","http://www.topwonks.org/experts/aziz-huq/","http://www.alternet.org/authors/aziz-huq/feed","x",-1,"Slate, The Nation, Brennan Center for Justice Blog");
 insert into wonks (wonk_id,name,bio_url,blog_url,twitter_url,twitter_id,also_found_in) values (1005,"Aziz Huq","http://www.topwonks.org/experts/aziz-huq/","http://www.huffingtonpost.com/author/index.php?author=aziz-huq","x",-1,"Slate, The Nation, Brennan Center for Justice Blog");
